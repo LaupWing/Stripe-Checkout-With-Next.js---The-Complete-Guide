@@ -12,6 +12,7 @@ export default function Home() {
       quantity: 0,
       price: 999,
    })
+   const [loading, setLoading] = useState(false)
 
    const changeQuantity = (value) => {
       setItem({ ...item, quantity: Math.max(0, value) })
@@ -27,6 +28,19 @@ export default function Home() {
    const onInputChange = (e) => {
       changeQuantity(parseInt(e.target.value));
    }
+
+   const createCheckOutSession = async () => {
+      const stripe = await stripePromise
+      const checkoutSession = await axios.post('/api/create-stripe-session', {
+         item: item,
+      })
+      const result = await stripe.redirectToCheckout({
+         sessionId: checkoutSession.data.id,
+      })
+      if (result.error) {
+         alert(result.error.message)
+      }
+    }
 
    return (
       <div className={styles.container}>
