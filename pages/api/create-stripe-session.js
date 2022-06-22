@@ -11,6 +11,8 @@ export default async (req,res)=>{
             name: item.name
          },
          unit_amount: item.price * 100
-      }
+      },
+      description: item.description,
+      quantity: item.quantity
    }
 }
