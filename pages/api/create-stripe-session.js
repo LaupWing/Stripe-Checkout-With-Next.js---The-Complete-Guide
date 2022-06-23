@@ -9,7 +9,7 @@ export default async function CreateStripeSession (req,res){
 
    const stripe_object = {
       price_data:{
-         currency: 'usd',
+         currency: 'eur',
          product_data:{
             images: [item.image],
             name: item.name
@@ -21,7 +21,7 @@ export default async function CreateStripeSession (req,res){
    }
 
    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
+      payment_method_types: ['ideal'],
       line_items: [stripe_object],
       mode: 'payment',
       success_url: `${redirectURL}?status=success`,
